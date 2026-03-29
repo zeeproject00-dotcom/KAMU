@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hadiah Kecil Dari Aku</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #f3badf 0%, #ffe6e6 50%, #f8f6f6 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animasi Hati Berjatuhan */
+        .falling-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: #ec8181;
+            animation: fall linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Container Utama */
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Section Pembuka */
+        .hero-section {
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(255, 126, 174, 0.692);
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-section h1 {
+            font-size: 2.5em;
+            color: #ff6b6b;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .hero-section .subtitle {
+            font-size: 1.3em;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Foto Couple */
+        .photo-frame {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 30px auto;
+            border: 8px solid white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4em;
+        }
+
+        /* Section Pesan */
+        .message-section {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 40px rgba(250, 114, 114, 0.25);
+        }
+
+        .message-section h2 {
+            color: #ff6b6b;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+        }
+
+        .message-section p {
+            color: #555;
+            line-height: 2;
+            font-size: 1.1em;
+            text-align: center;
+        }
+
+        /* Tombol Interaktif */
+        .interactive-section {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 20px;
+            margin-bottom: 30px;
+        }
+
+        .love-button {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            padding: 18px 45px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+            margin: 10px;
+        }
+
+        .love-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.5);
+        }
+
+        .love-button:active {
+            transform: translateY(0);
+        }
+
+        /* Pesan Rahasia */
+        .secret-message {
+            display: none;
+            background: linear-gradient(135deg, #fff5f5, #ffe0e0);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 25px;
+            border: 2px solid #ff6b6b;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .secret-message p {
+            color: #d63384;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        /* Gallery Foto */
+        .gallery-section {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.25);
+        }
+
+        .gallery-section h2 {
+            color: #ff6b6b;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .photo-item {
+            aspect-ratio: 1;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-item:hover {
+            transform: scale(1.05);
+        }
+
+        /* Countdown Timer */
+        .countdown-section {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .countdown-section h2 {
+            margin-bottom: 20px;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            min-width: 100px;
+        }
+
+        .countdown-item .number {
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+
+        .countdown-item .label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        footer span {
+            color: #ff6b6b;
+        }
+
+        /* Responsif */
+        @media (max-width: 600px) {
+            .hero-section h1 {
+                font-size: 1.8em;
+            }
+            
+            .countdown-item {
+                min-width: 70px;
+                padding: 15px;
+            }
+            
+            .countdown-item .number {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animasi Hati Berjatuhan -->
+    <div class="falling-hearts" id="heartsContainer"></div>
+
+    <div class="container">
+        <!-- Section Pembuka -->
+        <section class="hero-section">
+            <h1>💕 NIIHH AKUU KASIIHH 💕</h1>
+            <p class="subtitle">"I LOVE YOUU"</p>
+            <div class="photo-frame">
+                <img id="mainPhoto" src="" alt="Kita" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <p style="color: #888; margin-top: 20px;">Dibuat dengan pusing Sepenuh Hati</p>
+        </section>
+
+        <!-- Countdown Berpacaran -->
+        <section class="countdown-section">
+            <h2>⏰ Waktu Kita Bersama</h2>
+            <div class="countdown">
+                <div class="countdown-item">
+                    <div class="number" id="days">0</div>
+                    <div class="label">Hari</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="number" id="hours">0</div>
+                    <div class="label">Jam</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="number" id="minutes">0</div>
+                    <div class="label">Menit</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="number" id="seconds">0</div>
+                    <div class="label">Detik</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Pesan Romantis -->
+        <section class="message-section">
+            <h2>💌 NIIHH BUUAAT KAMUUU💕</h2>
+            <p>
+                HAAYY SAYAANNGGG...<br><br>
+                	Makasiiih yaaa sayaaannnggg buuaat  semuuaa yaangg kamuu kasiii , Nggaaaa ngiiraa yaaa kitaa udaah setaaun aajaa daaan nggaa keraasaa yaaa kamuu udaaah maauu luluus aajaa daann yaaapp ituuu artiinyaaa ninggaliin aakuuu (HIIKKSS-SEDIIIHHH) Semoogaa hubuungaaan kitaaaa bisaa lanjuuut teruuss yaaa saaampaaaiiii kapaaannpuunnn ituuuu selamaa lamaaanyaa ,okaayy???
+	Saamaa akuuu teruuuss yaaa nduutt,viiinn,mbeeem,deeek,chiill, daann supeerherookeciill aakuu.Kamuu orangg hebaatt yaaang pernaah akuu temuuin,cewee yaangg nguuaatiin aakuu,yakiiniiin aakuu. Daan ituuu salaah saatuu alaasaan akuu buuat pertahaaniin semuuaa iinni semoogaaa kedepaannyaa makiiiin baaikk yaaa hubuungaannyaa XIXIXIXXI --biiaar kitaaa bisaaa keliliing duniiaa barengg"--
+	Semoogaa kamuuu bisaa dapeetiiin apaa yaangg kamuu pengeeniinn daaaan citaa citaa kamuuu tercapaaii yaaah looveee yuuu sayaanngggg,semoogaaa haadiiiaah keciiill daarii akuuuu iniii bisaaa selaaluuu ngiingeetiiinn kamuuuu keeeee aakuuuu daaan jaadii alaasaaan buuuaat kitaaa selaaluu bersaamaa yaaaa,muungkiinn memaangg tidaaak sebeeraapaa taapiii memaangg inii yaaanngg akuuu kasiihh daariii haatiii aakuuu,Semooogaaa kaamuuu suukaa yaaaa sayaanggg byeee byeee baaikk baaiikk yaaa diii luuuaarr sanaaa jaagaaa diriii kamuuu baaik baaiikk,kaloo biisaa jagaaa peraasaann daaan jagaa hubuungaann juugaaa xixixixi udaaah aahhh mauuu naangiiss akuuuu tataaa baaaik baaikkk yaaa<br><br>
+                <strong>🫶I LOVEE PERII KECIILKUUU🫶</strong>
+            </p>
+        </section>
+
+        <!-- Section Interaktif -->
+        <section class="interactive-section">
+            <h2 style="color: #ff6b6b; margin-bottom: 20px;">✨ Klik di Bawah Ini!</h2>
+            <button class="love-button" onclick="showSecretMessage()">💖 Klik Aku! 💖</button>
+            <button class="love-button" onclick="sendVirtualHug()">🤗 Peluk Virtual</button>
+            <button class="love-button" onclick="countClicks()">❤️ Hitung Cinta</button>
+            
+            <div class="secret-message" id="secretMessage">
+                <p style="font-size: 1.5em;">💕AKUU SAYAANGG KAMUUU💕</p>
+                <p>kakaak haappyy so so soo happyy bangeet bisaaa kenaal aadeek</p>
+                <p id="clickCount">Kamu sudah klik: 0 kali</p>
+            </div>
+            
+            <div id="hugMessage" style="display: none; margin-top: 20px; color: #ff6b6b; font-size: 1.2em;">
+                🤗 <strong>HUGS FOR YOU!</strong> 🤗<br>
+                semaangaatt teruuss yaaa sayaangg ,muungkiin kitaaa udaaah gaa keteemuu laagii daaan bakalaan susaah 
+                taapii kakaak besoo usahaain deehh biiaar bisaa keteemuu laagii mungkiiiin kakaak besook yaang ke soloo 
+                ataau gimanaa naanti semoogaa bisaa,aadee jagaa dirii yaa dii sanaaa besookk jangaaan lupaaaiin kakaak 
+                jangaan tinggaliin kakaak yaaa sayaannggg,kakaak sayaangg aadee
+            </div>
+        </section>
+
+        <!-- Gallery Foto -->
+        <section class="gallery-section">
+            <h2>📸 Kenangan Kita</h2>
+            <div class="photo-grid">
+                <div class="photo-item" style="background: linear-gradient(45deg, #ff9a9e, #fad0c4); overflow: hidden; padding: 0;">
+                    <img src="file:///C:/Users/ASUS/OneDrive/文档/KAMU/PHOTO1.jpg" alt="Foto 1" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="photo-item" style="background: linear-gradient(45deg, #ff9a9e, #fad0c4); overflow: hidden; padding: 0;">
+                    <img src="file:///C:/Users/ASUS/OneDrive/文档/KAMU/PHOTO2.jpg" alt="Foto 2" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="photo-item" style="background: linear-gradient(45deg, #ff9a9e, #fad0c4); overflow: hidden; padding: 0;">
+                    <img src="file:///C:/Users/ASUS/OneDrive/文档/KAMU/PHOTO3.jpg" alt="Foto 3" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="photo-item" style="background: linear-gradient(45deg, #ff9a9e, #fad0c4); overflow: hidden; padding: 0;">
+                    <img src="file:///C:/Users/ASUS/OneDrive/文档/KAMU/PHOTO4.jpg" alt="Foto 4" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>Dibuat dengan 💕 oleh <span>[NAUFAL ZAHID MBUUL GANTENGG]</span></p>
+            <p>© 2025 - Cinta Kita</p>
+        </footer>
+    </div>
+
+    <script>
+        // ========== KUSTOMISASI ==========
+        // Ubah tanggal pacaran kamu di bawah ini (format: Tahun, Bulan-1, Tanggal, Jam, Menit)
+        // Contoh: new Date(2025, 8, 25, 21, 0) = 25 Februai 2025 jam 21:00
+        const startDate = new Date(2025, 8, 25, 21, 0).getTime();
+        // ====================== ===========
+
+        // Load Foto dari folder
+        window.addEventListener('DOMContentLoaded', function() {
+            const photoPath = 'file:///C:/Users/ASUS/OneDrive/文档/KAMU/KITAA.jpg';
+            document.getElementById('mainPhoto').src = photoPath;
+        });
+
+        // Animasi Hati Berjatuhan
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = ['❤️', '💕', '💗', '💖', '💓'][Math.floor(Math.random() * 5)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            heart.style.opacity = Math.random() * 0.5 + 0.5;
+            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            document.getElementById('heartsContainer').appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 7000);
+        }
+
+        setInterval(createHeart, 400);
+
+        // Countdown Timer
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = now - startDate;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Fungsi Tampilkan Pesan Rahasia
+        function showSecretMessage() {
+            const message = document.getElementById('secretMessage');
+            message.style.display = message.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Fungsi Peluk Virtual
+        function sendVirtualHug() {
+            const hugMessage = document.getElementById('hugMessage');
+            hugMessage.style.display = 'block';
+            
+            // Buat efek hati meledak
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    createHeart();
+                }, i * 100);
+            }
+
+            setTimeout(() => {
+                hugMessage.style.display = 'none';
+            }, 3000);
+        }
+
+        // Fungsi Hitung Klik Cinta
+        let clickCount = 0;
+        function countClicks() {
+            clickCount++;
+            document.getElementById('clickCount').textContent = 'Kamu sudah klik: ' + clickCount + ' kali';
+            
+            // Efek visual
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    createHeart();
+                }, i * 50);
+            }
+        }
+
+        // Easter Egg: Konfetti saat klik banyak
+        document.addEventListener('click', function(e) {
+            if (clickCount >= 10 && clickCount % 5 === 0) {
+                for (let i = 0; i < 20; i++) {
+                    setTimeout(createHeart, i * 50);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
